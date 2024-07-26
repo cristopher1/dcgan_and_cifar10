@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  jupyter_and_tf_GPU:
+    image: tensorflow/tensorflow:latest-gpu-jupyter
+    volumes:
+      - ./:/tf/DCGAN
+    tty: true
+    ports:
+      - 8888:8888
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    entrypoint: jupyter lab --ip 0.0.0.0 --no-browser --allow-root
